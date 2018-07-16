@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <ss-content :row="row" :span="col"></ss-content>
+    <ss-content :row-span="rowSpan"></ss-content>
   </el-container>
 </template>
 <script>
@@ -9,17 +9,21 @@ export default {
   name: 'SsMain',
   mounted () {
     const self = this
-    this.$el.style.height = window.innerHeight + 'px'
+    let innerHeight = window.innerHeight
+    this.$el.style.height = innerHeight + 'px'
     this.$root.Bus.$on('WAH', function (data) {
-      self.col = data[0]
-      self.row = data[1]
-      console.log(data)
+      self.rowSpan.span = data[0]
+      self.rowSpan.row = data[1]
+      self.rowSpan.rowHeight = innerHeight / data[1]
     })
   },
   data () {
     return {
-      row: 1,
-      col: 1
+      rowSpan: {
+        row: 1,
+        span: 1,
+        rowHeight: 0
+      }
     }
   },
   components: {
@@ -30,6 +34,5 @@ export default {
 <style scoped>
   .el-container {
     overflow: hidden;
-    background: #232E1C;
   }
 </style>

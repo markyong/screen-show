@@ -8,6 +8,9 @@
       <el-button size="small" @click="reset">重置</el-button>
       <el-button size="small" type="primary" @click="confirm">确认</el-button>
     </div>
+    <div class="ssCharts" @dragover="dragover($event)">
+      <div id="test" draggable="true" @dragstart="drag($event)">11111</div>
+    </div>
   </el-aside>
 </template>
 <script>
@@ -27,6 +30,12 @@ export default {
     },
     confirm () {
       this.$root.Bus.$emit('WAH', [this.widthCount, this.heightCount])
+    },
+    drag (e) {
+      e.dataTransfer.setData('Text', e.target.id)
+    },
+    dragover (e) {
+      e.preventDefault()
     }
   }
 }
@@ -34,7 +43,7 @@ export default {
 <style scoped>
   .el-aside {
     float: left;
-    height: 500px;
+    height: 100%;
     background: rgba(0,0,0,0.7);
   }
   .inputNum {
@@ -45,5 +54,10 @@ export default {
     text-align: center;
     height: 47px;
     line-height: 47px;
+  }
+  .ssCharts {
+    width: 100%;
+    height: 270px;
+    background: lightseagreen;
   }
 </style>
